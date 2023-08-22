@@ -20,23 +20,24 @@ namespace Shoe_Store
         {
             LoadAllProducts();
             categoryIds = dbContext.Categories.Select(category => category.CategoryId).ToList();
+            txtProductID.Enabled = false;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            string productName = txtProductName.Text.Trim();
+            /*string productName = txtProductName.Text.Trim();
             decimal price = Convert.ToDecimal(txtPrice.Text);
             int inStock = Convert.ToInt32(txtInStock.Text);
             int categoryId = Convert.ToInt32(txtCategoryId.Text);
 
             //Create a new Shoe_Store.Models.Product entity and populate its properties
-           var newProduct = new Shoe_Store.Models.Product
-           {
-               ProductName = productName,
-               Price = price,
-               InStock = inStock,
-               CategoryId = categoryId
-           };
+            var newProduct = new Shoe_Store.Models.Product
+            {
+                ProductName = productName,
+                Price = price,
+                InStock = inStock,
+                CategoryId = categoryId
+            };
 
             // Add the new product to the database using Entity Framework
             dbContext.Products.Add(newProduct);
@@ -59,39 +60,80 @@ namespace Shoe_Store
             {
                 // Handle any potential errors that may occur during the database operation
                 MessageBox.Show($"An error occurred while adding the product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }*/
+        }
+
+        private bool IsValid()
+        {
+            bool flag = true;
+            string msg = "";
+            if (txtProductName.Text.Length == 0)
+            {
+                flag = false;
+                msg += "Product Name is required.\n";
             }
+
+            if (txtPrice.Text.Length == 0)
+            {
+                flag = false;
+                msg += "Price must be greater than 0.\n";
+            }
+
+            if (txtInStock.Text.Length == 0)
+            {
+                flag = false;
+                msg += "In Stock must be greater than 0.\n";
+            }
+
+            if (flag == false)
+            {
+                MessageBox.Show(msg);
+                return false;
+            }
+            return true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dataGridView.SelectedRows.Count > 0)
+            if (txtProductID.Text != "")
             {
-                int selectedProductId = Convert.ToInt32(txtCategoryId.Text);
-
-                var product = dbContext.Products.Find(selectedProductId);
-
-                if (product != null)
+                if (MessageBox.Show("Do you want to delete?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    // Remove the product from the database
-                    dbContext.Products.Remove(product);
-                    dbContext.SaveChanges();
+                    if (dataGridView.SelectedRows.Count > 0)
+                    {
+                        int selectedProductId = Convert.ToInt32(txtProductID.Text);
 
-                    // Show a success message to the user
-                    MessageBox.Show("Product deleted successfully!", "Delete Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        var product = dbContext.Products.Find(selectedProductId);
 
-                    // Refresh the DataGridView after deleting the product
-                    LoadAllProducts();
+                        if (product != null)
+                        {
+                            // Remove the product from the database
+                            dbContext.Products.Remove(product);
+                            dbContext.SaveChanges();
+
+                            // Show a success message to the user
+                            MessageBox.Show("Product deleted successfully!", "Delete Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Refresh the DataGridView after deleting the product
+                            LoadAllProducts();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select a product to delete.", "Delete Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("Please select a product to delete.", "Delete Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please choose a product id.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
             LoadAllProducts();
+            ClearInputFields();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -161,24 +203,31 @@ namespace Shoe_Store
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (dataGridView.SelectedRows.Count > 0)
+            if (txtProductID.Text != "")
             {
-                int selectedProductID = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["ProductId"].Value);
-                var product = dbContext.Products.Find(selectedProductID);
-
-                if (product != null)
+                if (dataGridView.SelectedRows.Count > 0)
                 {
-                    // Update the properties of the product with the values from the input fields
-                    product.ProductName = txtProductName.Text;
-                    product.Price = Convert.ToDecimal(txtPrice.Text);
-                    product.InStock = Convert.ToInt32(txtInStock.Text);
-                    product.CategoryId = Convert.ToInt32(txtCategoryId.Text);
+                    int selectedProductID = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["ProductId"].Value);
+                    var product = dbContext.Products.Find(selectedProductID);
 
-                    dbContext.SaveChanges();
+                    if (product != null)
+                    {
+                        // Update the properties of the product with the values from the input fields
+                        product.ProductName = txtProductName.Text;
+                        product.Price = decimal.Parse(txtPrice.Text);
+                        product.InStock = Convert.ToInt32(txtInStock.Text);
+                        product.CategoryId = int.Parse(cbxCategoryId.SelectedValue.ToString());
 
-                    MessageBox.Show("Product updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadAllProducts();
+                        dbContext.SaveChanges();
+
+                        MessageBox.Show("Product updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadAllProducts();
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please choose a product id.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void LoadAllProducts()
@@ -198,6 +247,9 @@ namespace Shoe_Store
                 .ToList();
 
             dataGridView.DataSource = productsWithCategoryNames;
+            cbxCategoryId.DataSource = dbContext.Categories.ToList();
+            cbxCategoryId.DisplayMember = "CategoryName";
+            cbxCategoryId.ValueMember = "CategoryId";
         }
         private void ClearInputFields()
         {
@@ -205,7 +257,6 @@ namespace Shoe_Store
             txtProductName.Clear();
             txtPrice.Clear();
             txtInStock.Clear();
-            txtCategoryId.Clear();
         }
 
         private void btnFilter_Click(object sender, EventArgs e)
@@ -244,5 +295,35 @@ namespace Shoe_Store
                 dataGridView.DataSource = productsWithCategoryNames;
             }
         }
+
+        private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridView.Rows.Count && e.ColumnIndex >= 0)
+            {
+                txtProductID.Enabled = false;
+                var productId = dataGridView.Rows[e.RowIndex].Cells["ProductId"].Value.ToString();
+                var productName = dataGridView.Rows[e.RowIndex].Cells["ProductName"].Value.ToString();
+                var price = dataGridView.Rows[e.RowIndex].Cells["Price"].Value.ToString();
+                var inStock = dataGridView.Rows[e.RowIndex].Cells["InStock"].Value.ToString();
+                var category = dataGridView.Rows[e.RowIndex].Cells["CategoryInfo"].Value.ToString();
+                if (category.Length >= 9) // Kiểm tra xem chuỗi có ít nhất 7 ký tự
+                {
+                    category = category.Substring(0, category.Length - 9); // Cắt bỏ 7 ký tự cuối
+                }
+
+                //binding du lieu tu dgvEmployees voi cbCity
+                var selectCategory = cbxCategoryId.Items.Cast<Models.Category>().FirstOrDefault(c => c.CategoryName.Equals(category));
+                if (selectCategory != null)
+                {
+                    cbxCategoryId.SelectedItem = selectCategory;
+                }
+                txtProductID.Text = productId;
+                txtProductName.Text = productName;
+                txtPrice.Text = price;
+                txtInStock.Text = inStock;
+                cbxCategoryId.SelectedItem = category;
+            }
+        }
     }
 }
+

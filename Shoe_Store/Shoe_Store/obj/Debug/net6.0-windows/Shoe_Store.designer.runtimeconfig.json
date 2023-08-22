@@ -12,8 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\MSI Bravo\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\MSI Bravo\\.nuget\\packages",
+      "C:\\Users\\bachnh\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\bachnh\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ],
     "configProperties": {

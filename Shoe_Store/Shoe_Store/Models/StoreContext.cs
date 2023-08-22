@@ -30,7 +30,6 @@ namespace Shoe_Store.Models
                  .AddJsonFile("AppSettings.json", optional: true, reloadOnChange: true);
             IConfiguration configuration = builder.Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("Store"));
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

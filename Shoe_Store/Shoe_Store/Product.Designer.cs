@@ -36,7 +36,6 @@
             btnSearch = new Button();
             txtSearch = new TextBox();
             btnLoad = new Button();
-            txtCategoryId = new TextBox();
             label2 = new Label();
             txtInStock = new TextBox();
             label3 = new Label();
@@ -47,6 +46,7 @@
             btnUpdate = new Button();
             btnExport = new Button();
             btnFilter = new Button();
+            cbxCategoryId = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -63,6 +63,7 @@
             dataGridView.RowTemplate.Height = 25;
             dataGridView.Size = new Size(625, 417);
             dataGridView.TabIndex = 0;
+            dataGridView.CellClick += dataGridView_CellClick;
             // 
             // btnAdd
             // 
@@ -133,14 +134,6 @@
             btnLoad.UseVisualStyleBackColor = true;
             btnLoad.Click += btnLoad_Click;
             // 
-            // txtCategoryId
-            // 
-            txtCategoryId.Location = new Point(535, 32);
-            txtCategoryId.Margin = new Padding(3, 4, 3, 4);
-            txtCategoryId.Name = "txtCategoryId";
-            txtCategoryId.Size = new Size(114, 27);
-            txtCategoryId.TabIndex = 9;
-            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -152,7 +145,7 @@
             // 
             // txtInStock
             // 
-            txtInStock.Location = new Point(318, 71);
+            txtInStock.Location = new Point(323, 71);
             txtInStock.Margin = new Padding(3, 4, 3, 4);
             txtInStock.Name = "txtInStock";
             txtInStock.Size = new Size(114, 27);
@@ -169,7 +162,7 @@
             // 
             // txtProductName
             // 
-            txtProductName.Location = new Point(318, 31);
+            txtProductName.Location = new Point(324, 31);
             txtProductName.Margin = new Padding(3, 4, 3, 4);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(114, 27);
@@ -234,10 +227,19 @@
             btnFilter.UseVisualStyleBackColor = true;
             btnFilter.Click += btnFilter_Click;
             // 
+            // cbxCategoryId
+            // 
+            cbxCategoryId.FormattingEnabled = true;
+            cbxCategoryId.Location = new Point(543, 30);
+            cbxCategoryId.Name = "cbxCategoryId";
+            cbxCategoryId.Size = new Size(151, 28);
+            cbxCategoryId.TabIndex = 20;
+            // 
             // Product
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(cbxCategoryId);
             Controls.Add(btnFilter);
             Controls.Add(btnExport);
             Controls.Add(btnUpdate);
@@ -247,7 +249,6 @@
             Controls.Add(label4);
             Controls.Add(txtInStock);
             Controls.Add(label3);
-            Controls.Add(txtCategoryId);
             Controls.Add(label2);
             Controls.Add(btnLoad);
             Controls.Add(txtSearch);
@@ -276,7 +277,6 @@
         private Button btnSearch;
         private TextBox txtSearch;
         private Button btnLoad;
-        private TextBox txtCategoryId;
         private Label label2;
         private TextBox txtInStock;
         private Label label3;
@@ -287,5 +287,6 @@
         private Button btnUpdate;
         private Button btnExport;
         private Button btnFilter;
+        private ComboBox cbxCategoryId;
     }
 }
