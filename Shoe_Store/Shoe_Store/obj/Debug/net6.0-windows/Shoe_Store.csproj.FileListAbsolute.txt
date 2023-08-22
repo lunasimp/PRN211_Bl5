@@ -67,21 +67,6 @@ D:\PRN211_block3\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\refin
 D:\PRN211_block3\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.pdb
 D:\PRN211_block3\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.genruntimeconfig.cache
 D:\PRN211_block3\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\ref\Shoe_Store.dll
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.csproj.AssemblyReference.cache
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Category.resources
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Form1.resources
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Login.resources
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Main.resources
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Product.resources
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.ResetPassword.resources
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.csproj.GenerateResource.cache
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.GeneratedMSBuildEditorConfig.editorconfig
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.AssemblyInfoInputs.cache
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.AssemblyInfo.cs
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.csproj.CoreCompileInputs.cache
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.dll
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\refint\Shoe_Store.dll
-D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.pdb
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\Shoe_Store.exe
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\Shoe_Store.deps.json
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\Shoe_Store.runtimeconfig.json
@@ -133,6 +118,21 @@ D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\r
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.csproj.AssemblyReference.cache
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Category.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Form1.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Login.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Main.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Product.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.ResetPassword.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.csproj.GenerateResource.cache
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.GeneratedMSBuildEditorConfig.editorconfig
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.AssemblyInfoInputs.cache
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.AssemblyInfo.cs
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.csproj.CoreCompileInputs.cache
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.csproj.CopyComplete
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.dll
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\refint\Shoe_Store.dll
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.pdb
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.genruntimeconfig.cache
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\ref\Shoe_Store.dll

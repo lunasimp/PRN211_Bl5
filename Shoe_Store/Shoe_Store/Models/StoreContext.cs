@@ -29,7 +29,7 @@ namespace Shoe_Store.Models
                  .SetBasePath(Directory.GetCurrentDirectory())
                  .AddJsonFile("AppSettings.json", optional: true, reloadOnChange: true);
             IConfiguration configuration = builder.Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Store"));
+            optionsBuilder.UseSqlServer("Server=IAMSU;database=Store;uid=sa;pwd=sa@123456;TrustServerCertificate=true;Integrated Security = true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
