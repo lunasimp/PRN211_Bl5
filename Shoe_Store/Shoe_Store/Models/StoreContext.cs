@@ -39,7 +39,7 @@ namespace Shoe_Store.Models
             {
                 entity.ToTable("Account");
 
-                entity.Property(e => e.AccountId).ValueGeneratedNever();
+                entity.Property(e => e.AccountId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -58,7 +58,7 @@ namespace Shoe_Store.Models
             {
                 entity.ToTable("Category");
 
-                entity.Property(e => e.CategoryId).ValueGeneratedNever();
+                entity.Property(e => e.CategoryId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CategoryName)
                     .IsRequired()
@@ -69,7 +69,7 @@ namespace Shoe_Store.Models
             {
                 entity.ToTable("Customer");
 
-                entity.Property(e => e.CustomerId).ValueGeneratedNever();
+                entity.Property(e => e.CustomerId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CustomerName)
                     .IsRequired()
@@ -87,7 +87,7 @@ namespace Shoe_Store.Models
             {
                 entity.ToTable("Product");
 
-                entity.Property(e => e.ProductId).ValueGeneratedNever();
+                entity.Property(e => e.ProductId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
 
@@ -105,7 +105,7 @@ namespace Shoe_Store.Models
             {
                 entity.ToTable("Provider");
 
-                entity.Property(e => e.ProviderId).ValueGeneratedNever();
+                entity.Property(e => e.ProviderId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ProvideDate).HasColumnType("datetime");
 
