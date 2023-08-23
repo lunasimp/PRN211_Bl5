@@ -23,7 +23,7 @@ namespace Shoe_Store
         private void Provider_Load(object sender, EventArgs e)
         {
             LoadAllProvider();
-
+            txtProviderID.Enabled = false;
         }
 
         private void LoadAllProvider()
@@ -69,23 +69,24 @@ namespace Shoe_Store
         {
             LoadAllProvider();
             ClearInputFields();
+            txtProviderID.Enabled = false;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try
             {
-                int providerid;
+                /*int providerid;*/
                 string providerName = txtProviderName.Text.Trim();
                 int quantity;
                 int productid;
                 DateTime providerDates; // Declare providerDates here
 
-                if (!int.TryParse(txtProviderID.Text, out providerid))
+                /*if (!int.TryParse(txtProviderID.Text, out providerid))
                 {
                     MessageBox.Show("Please enter a valid ProviderID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
+                }*/
                 if (!int.TryParse(txtQuantity.Text, out quantity))
                 {
                     MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -103,7 +104,7 @@ namespace Shoe_Store
                 {
                     var newProvider = new Shoe_Store.Models.Provider
                     {
-                        ProviderId = providerid,
+                        /*ProviderId = providerid,*/
                         ProviderName = providerName,
                         Quantity = quantity,
                         ProvideDate = providerDates,

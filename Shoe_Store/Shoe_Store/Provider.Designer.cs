@@ -206,6 +206,7 @@
             dataGridView.RowTemplate.Height = 25;
             dataGridView.Size = new Size(720, 296);
             dataGridView.TabIndex = 56;
+            dataGridView.CellClick += dataGridView_CellClick;
             // 
             // Provider
             // 
