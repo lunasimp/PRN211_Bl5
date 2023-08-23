@@ -25,25 +25,27 @@ namespace Shoe_Store
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            /*string productName = txtProductName.Text.Trim();
-            decimal price = Convert.ToDecimal(txtPrice.Text);
-            int inStock = Convert.ToInt32(txtInStock.Text);
-            int categoryId = Convert.ToInt32(txtCategoryId.Text);
-
-            //Create a new Shoe_Store.Models.Product entity and populate its properties
-            var newProduct = new Shoe_Store.Models.Product
+            if(IsValid())
             {
-                ProductName = productName,
-                Price = price,
-                InStock = inStock,
-                CategoryId = categoryId
-            };
+                string productName = txtProductName.Text.Trim();
+                decimal price = Convert.ToDecimal(txtPrice.Text);
+                int inStock = Convert.ToInt32(txtInStock.Text);
+                int categoryId = int.Parse(cbxCategoryId.SelectedValue.ToString()); ;
 
-            // Add the new product to the database using Entity Framework
-            dbContext.Products.Add(newProduct);
+                // Create a new NES_Store.Models.Product entity and populate its properties
+                var newProduct = new Shoe_Store.Models.Product
+                {
+                    ProductName = productName,
+                    Price = price,
+                    InStock = inStock,
+                    CategoryId = categoryId
+                };
 
-            try
-            {
+                // Add the new product to the database using Entity Framework
+                dbContext.Products.Add(newProduct);
+
+                try
+                {
                 // Save the changes to the database
                 dbContext.SaveChanges();
 
@@ -55,12 +57,13 @@ namespace Shoe_Store
 
                 // Refresh the DataGridView to show the new product
                 LoadAllProducts();
+                }
+                catch (Exception ex)
+                {
+                    // Handle any potential errors that may occur during the database operation
+                    MessageBox.Show($"An error occurred while adding the product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
-            {
-                // Handle any potential errors that may occur during the database operation
-                MessageBox.Show($"An error occurred while adding the product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
         }
 
         private bool IsValid()
@@ -140,27 +143,29 @@ namespace Shoe_Store
         {
             try
             {
-                string filePath = Path.Combine("D:/Demo/NES Store/", "Logs", "ProductData.txt");
+                SaveFileDialog saveDialog = new SaveFileDialog();
+                saveDialog.Filter = "Text Files|*.txt|All Files|*.*"; // Bộ lọc file chỉ hiển thị file .txt
+                saveDialog.Title = "Save Text File";
 
-                // Create the directory if it doesn't exist
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                // Get the data to export from the DataGridView
-                var dataToExport = dataGridView.Rows.Cast<DataGridViewRow>()
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveDialog.FileName;
+                    // Get the data to export from the DataGridView
+                    var dataToExport = dataGridView.Rows.Cast<DataGridViewRow>()
                     .Select(row => string.Join(" - ", row.Cells.Cast<DataGridViewCell>().Select(cell => cell.Value.ToString())))
                     .ToList();
 
-                // Write the data to the text file
-                using (StreamWriter writer = new StreamWriter(filePath))
-                {
-                    foreach (var line in dataToExport)
+                    // Write the data to the text file
+                    using (StreamWriter writer = new StreamWriter(filePath))
                     {
-                        writer.WriteLine(line);
+                        foreach (var line in dataToExport)
+                        {
+                            writer.WriteLine(line);
+                        }
                     }
+                    // Show a success message to the user
+                    MessageBox.Show($"Data exported to {filePath}", "Export Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
-                // Show a success message to the user
-                MessageBox.Show($"Data exported to {filePath}", "Export Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
