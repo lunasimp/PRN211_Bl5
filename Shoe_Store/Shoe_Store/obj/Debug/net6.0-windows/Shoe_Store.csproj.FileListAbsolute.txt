@@ -138,3 +138,4 @@ D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\S
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\ref\Shoe_Store.dll
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.CustomerActivities.resources
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.Provider.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\bin\Debug\net6.0-windows\AppSettings.json

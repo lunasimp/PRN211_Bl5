@@ -25,12 +25,17 @@ namespace Shoe_Store
        private void Category_Load(object sender, EventArgs e)
         {
             LoadCategoryData();
-          BindDataToControls();
+            BindDataToControls();
+            txtCategoryId.Enabled = false;
         }
        
         private BindingSource categoryBindingSource = new BindingSource();
 
-
+/*        private void ClearInputFields()
+        {
+            txtCategoryId.Clear();
+            txtProductName.Clear();
+        }*/
 
         private void LoadCategoryData()
         {
@@ -82,11 +87,10 @@ namespace Shoe_Store
                     connection.Open();
 
                     string categoryName = txtProductName.Text;
-                    string query = "INSERT INTO [dbo].[Category] ([CategoryId], [CategoryName]) VALUES (@CategoryId, @CategoryName)";
+                    string query = "INSERT INTO [dbo].[Category] ([CategoryName]) VALUES (@CategoryName)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@CategoryId", GetNextCategoryId(connection)); 
                         command.Parameters.AddWithValue("@CategoryName", categoryName);
 
                         int rowsAffected = command.ExecuteNonQuery();
@@ -109,7 +113,7 @@ namespace Shoe_Store
         }
 
 
-        private int GetNextCategoryId(SqlConnection connection)
+        /*private int GetNextCategoryId(SqlConnection connection)
         {
             string query = "SELECT ISNULL(MAX(CategoryId), 0) + 1 FROM [dbo].[Category]";
 
@@ -123,9 +127,7 @@ namespace Shoe_Store
                 return 1; 
             }
         }
-
-
-
+*/
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -169,16 +171,14 @@ namespace Shoe_Store
             }
         }
 
-
-
-
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count > 0)
             {
-                int categoryId = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["CategoryId"].Value);
+                /*int categoryId = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["CategoryId"].Value);*/
                 string newCategoryName = txtProductName.Text;
-                string query = "UPDATE [dbo].[Category] SET [CategoryName] = @CategoryName WHERE [CategoryId] = @CategoryId";
+                string query = "UPDATE [dbo].[Category] SET [CategoryName] = @CategoryName"; /*+
+                    " WHERE [CategoryId] = @CategoryId";*/
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -187,7 +187,7 @@ namespace Shoe_Store
                     {
                         connection.Open();
 
-                        command.Parameters.AddWithValue("@CategoryId", categoryId);
+                        /*command.Parameters.AddWithValue("@CategoryId", categoryId);*/
                         command.Parameters.AddWithValue("@CategoryName", newCategoryName);
 
                         int rowsAffected = command.ExecuteNonQuery();
@@ -222,7 +222,6 @@ namespace Shoe_Store
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -246,8 +245,6 @@ namespace Shoe_Store
                     MessageBox.Show("Lỗi: " + ex.Message);
                 }
             }
-
-
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -315,16 +312,6 @@ namespace Shoe_Store
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
 
         private void txtProductName_TextChanged(object sender, EventArgs e)
         {
