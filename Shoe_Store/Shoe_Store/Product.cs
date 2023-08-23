@@ -195,14 +195,15 @@ namespace Shoe_Store
                             product.ProductName,
                             product.Price,
                             product.InStock,
-                            CategoryInfo = $"{category.CategoryName} ({category.CategoryId})"
-                        })
+                            CategoryInfo = $"{category.CategoryName} (ID = {category.CategoryId})"
+                        }).ToList();
+                var filteredProducts = productsWithCategoryNames
                     .Where(p =>
-                        p.ProductName.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
-                        p.CategoryInfo.Contains(searchValue, StringComparison.OrdinalIgnoreCase))
+                        p.ProductName.ToLower().Contains(searchValue) ||
+                        p.CategoryInfo.ToLower().Contains(searchValue))
                     .ToList();
 
-                dataGridView.DataSource = productsWithCategoryNames;
+                dataGridView.DataSource = filteredProducts;
             }
         }
 
