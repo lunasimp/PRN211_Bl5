@@ -175,10 +175,10 @@ namespace Shoe_Store
         {
             if (dataGridView.SelectedRows.Count > 0)
             {
-                /*int categoryId = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["CategoryId"].Value);*/
+                int categoryId = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["CategoryId"].Value);
                 string newCategoryName = txtProductName.Text;
-                string query = "UPDATE [dbo].[Category] SET [CategoryName] = @CategoryName"; /*+
-                    " WHERE [CategoryId] = @CategoryId";*/
+                string query = "UPDATE [dbo].[Category] SET [CategoryName] = @CategoryName" +
+                    " WHERE [CategoryId] = @CategoryId";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -187,7 +187,7 @@ namespace Shoe_Store
                     {
                         connection.Open();
 
-                        /*command.Parameters.AddWithValue("@CategoryId", categoryId);*/
+                        command.Parameters.AddWithValue("@CategoryId", categoryId);
                         command.Parameters.AddWithValue("@CategoryName", newCategoryName);
 
                         int rowsAffected = command.ExecuteNonQuery();
