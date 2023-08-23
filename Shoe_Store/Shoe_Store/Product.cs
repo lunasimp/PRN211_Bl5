@@ -175,7 +175,7 @@ namespace Shoe_Store
         }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string searchValue = txtSearch.Text.Trim();
+            string searchValue = txtSearch.Text.Trim().ToLower();
 
             if (string.IsNullOrEmpty(searchValue))
             {
