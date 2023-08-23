@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +20,8 @@ namespace Shoe_Store
         }
         private Product productControl;
         private Category categoryControl;
+        private Provider providerControl;
+        private CustomerActivities customerActivitiesControl;   
         private void tsbProduct_Click(object sender, EventArgs e)
         {
             if (!mainPanel.Controls.Contains(productControl))
@@ -47,13 +49,31 @@ namespace Shoe_Store
 
         private void tsbProvider_Click(object sender, EventArgs e)
         {
-
-        }
+			if (!mainPanel.Controls.Contains(providerControl))
+			{
+				providerControl = new Provider();
+				providerControl.Dock = DockStyle.Fill;
+				mainPanel.Controls.Add(providerControl);
+			}
+			else
+			{
+				providerControl.BringToFront();
+			}
+		}
 
         private void tsbCustomer_Click(object sender, EventArgs e)
         {
-
-        }
+			if (!mainPanel.Controls.Contains(customerActivitiesControl))
+			{
+				customerActivitiesControl = new CustomerActivities();
+				customerActivitiesControl.Dock = DockStyle.Fill;
+				mainPanel.Controls.Add(customerActivitiesControl);
+			}
+			else
+			{
+				customerActivitiesControl.BringToFront();
+			}
+		}
         private void Main_Shown(object sender, EventArgs e)
         {
             tsbProduct.PerformClick();
