@@ -14,7 +14,7 @@ namespace Shoe_Store
 {
     public partial class Category : UserControl
     {
-        private string connectionString = "server =ADMIN\\SQLEXPRESS; database =Store;uid=sa;pwd=sa;TrustServerCertificate=true;Integrated Security = true"; 
+        private string connectionString = "server =IAMSU; database =Store;uid=sa;pwd=sa@123456;TrustServerCertificate=true;Integrated Security = true"; 
 
         public Category()
         {

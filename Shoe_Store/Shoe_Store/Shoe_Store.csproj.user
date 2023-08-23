@@ -4,6 +4,9 @@
     <Compile Update="Category.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="CustomerActivities.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -14,6 +17,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Product.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Provider.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="ResetPassword.cs">

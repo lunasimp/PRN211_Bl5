@@ -137,6 +137,9 @@ namespace Shoe_Store
         {
             LoadAllProducts();
             ClearInputFields();
+            cbxCategoryId.DataSource = dbContext.Categories.ToList();
+            cbxCategoryId.ValueMember = "CategoryId";
+            cbxCategoryId.DisplayMember = "CategoryName";
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -254,9 +257,10 @@ namespace Shoe_Store
 
             dataGridView.DataSource = productsWithCategoryNames;
             cbxCategoryId.DataSource = dbContext.Categories.ToList();
-            cbxCategoryId.DisplayMember = "CategoryName";
             cbxCategoryId.ValueMember = "CategoryId";
+            cbxCategoryId.DisplayMember = "CategoryName";
         }
+
         private void ClearInputFields()
         {
             txtProductID.Clear();
