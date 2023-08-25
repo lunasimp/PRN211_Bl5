@@ -33,7 +33,6 @@
             Price = new Label();
             txtProviderName = new TextBox();
             label4 = new Label();
-            txtProductId = new TextBox();
             label3 = new Label();
             txtProviderDate = new TextBox();
             label2 = new Label();
@@ -42,9 +41,9 @@
             btnSearch = new Button();
             txtProviderID = new TextBox();
             label1 = new Label();
-            btnDelete = new Button();
             btnAdd = new Button();
             dataGridView = new DataGridView();
+            cbxProduct = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -57,6 +56,7 @@
             btnUpdate.TabIndex = 72;
             btnUpdate.Text = "⇧";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // txtQuantity
             // 
@@ -91,14 +91,6 @@
             label4.Size = new Size(105, 20);
             label4.TabIndex = 68;
             label4.Text = "Provider name";
-            // 
-            // txtProductId
-            // 
-            txtProductId.Location = new Point(343, 56);
-            txtProductId.Margin = new Padding(3, 4, 3, 4);
-            txtProductId.Name = "txtProductId";
-            txtProductId.Size = new Size(170, 27);
-            txtProductId.TabIndex = 67;
             // 
             // label3
             // 
@@ -172,19 +164,9 @@
             label1.TabIndex = 59;
             label1.Text = "Provider ID";
             // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(658, 56);
-            btnDelete.Margin = new Padding(3, 4, 3, 4);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(25, 31);
-            btnDelete.TabIndex = 58;
-            btnDelete.Text = "-";
-            btnDelete.UseVisualStyleBackColor = true;
-            // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(626, 56);
+            btnAdd.Location = new Point(659, 56);
             btnAdd.Margin = new Padding(3, 4, 3, 4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(25, 31);
@@ -208,16 +190,24 @@
             dataGridView.TabIndex = 56;
             dataGridView.CellClick += dataGridView_CellClick;
             // 
+            // cbxProduct
+            // 
+            cbxProduct.FormattingEnabled = true;
+            cbxProduct.Location = new Point(341, 59);
+            cbxProduct.Name = "cbxProduct";
+            cbxProduct.Size = new Size(151, 28);
+            cbxProduct.TabIndex = 73;
+            // 
             // Provider
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(cbxProduct);
             Controls.Add(btnUpdate);
             Controls.Add(txtQuantity);
             Controls.Add(Price);
             Controls.Add(txtProviderName);
             Controls.Add(label4);
-            Controls.Add(txtProductId);
             Controls.Add(label3);
             Controls.Add(txtProviderDate);
             Controls.Add(label2);
@@ -226,7 +216,6 @@
             Controls.Add(btnSearch);
             Controls.Add(txtProviderID);
             Controls.Add(label1);
-            Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(dataGridView);
             Name = "Provider";
@@ -244,7 +233,6 @@
         private Label Price;
         private TextBox txtProviderName;
         private Label label4;
-        private TextBox txtProductId;
         private Label label3;
         private TextBox txtProviderDate;
         private Label label2;
@@ -253,8 +241,8 @@
         private Button btnSearch;
         private TextBox txtProviderID;
         private Label label1;
-        private Button btnDelete;
         private Button btnAdd;
         private DataGridView dataGridView;
+        private ComboBox cbxProduct;
     }
 }

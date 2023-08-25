@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration.Provider;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -38,11 +39,14 @@ namespace Shoe_Store
                         provider.ProviderName,
                         provider.ProvideDate,
                         provider.Quantity,
-                        ProductId = $"{product.ProductName} (ID = {product.ProductId})"
+                        product.ProductName
                     })
                 .ToList();
 
             dataGridView.DataSource = lprovider;
+            cbxProduct.DataSource = dbContext.Products.ToList();
+            cbxProduct.ValueMember = "ProductId";
+            cbxProduct.DisplayMember = "ProductName";
         }
 
         private void dataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -55,13 +59,19 @@ namespace Shoe_Store
                 string providerName = Convert.ToString(selectedRow.Cells["ProviderName"].Value);
                 DateTime providerDate = Convert.ToDateTime(selectedRow.Cells["ProvideDate"].Value); // Corrected column name
                 int quantity = Convert.ToInt32(selectedRow.Cells["Quantity"].Value);
-                string providerInfo = Convert.ToString(selectedRow.Cells["ProductId"].Value);
+                string providerInfo = Convert.ToString(selectedRow.Cells["ProductName"].Value);
+
+                var selectCategory = cbxProduct.Items.Cast<Models.Product>().FirstOrDefault(c => c.ProductName.Equals(providerInfo));
+                if (selectCategory != null)
+                {
+                    cbxProduct.SelectedItem = selectCategory;
+                }
 
                 txtProviderID.Text = providerid.ToString();
                 txtProviderName.Text = providerName.ToString();
                 txtQuantity.Text = quantity.ToString();
-                txtProductId.Text = providerInfo.ToString();
-                txtProviderDate.Text = providerDate.ToString("dd-MM-yyyy");
+                cbxProduct.SelectedItem = providerInfo;
+                txtProviderDate.Text = providerDate.ToString("MM-dd-yyyy");
             }
         }
 
@@ -79,7 +89,7 @@ namespace Shoe_Store
                 /*int providerid;*/
                 string providerName = txtProviderName.Text.Trim();
                 int quantity;
-                int productid;
+                int productid = int.Parse(cbxProduct.SelectedValue.ToString());
                 DateTime providerDates; // Declare providerDates here
 
                 /*if (!int.TryParse(txtProviderID.Text, out providerid))
@@ -92,33 +102,41 @@ namespace Shoe_Store
                     MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (!int.TryParse(txtProductId.Text, out productid))
+                /*if (!int.TryParse(txtProductId.Text, out productid))
                 {
                     MessageBox.Show("Please enter a valid ProductId.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
+                }*/
 
                 string providerDate = txtProviderDate.Text.Trim();
 
                 if (DateTime.TryParse(providerDate, out providerDates))
                 {
-                    var newProvider = new Shoe_Store.Models.Provider
-                    {
-                        /*ProviderId = providerid,*/
-                        ProviderName = providerName,
-                        Quantity = quantity,
-                        ProvideDate = providerDates,
-                        ProductId = productid,
-                    };
-                    // add
-                    dbContext.Providers.Add(newProvider);
-                    dbContext.SaveChanges();
-                    MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ClearInputFields();
-                    LoadAllProvider();
+                    if (providerDates <= DateTime.Now)
 
-                    int totalQuantity = CalculateTotalQuantity(productid);
-                    UpdateInStock(productid, totalQuantity);
+                    {
+                        var newProvider = new Shoe_Store.Models.Provider
+                        {
+                            /*ProviderId = providerid,*/
+                            ProviderName = providerName,
+                            Quantity = quantity,
+                            ProvideDate = providerDates,
+                            ProductId = productid,
+                        };
+                        // add
+                        dbContext.Providers.Add(newProvider);
+                        dbContext.SaveChanges();
+                        MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ClearInputFields();
+                        LoadAllProvider();
+
+                        int totalQuantity = CalculateTotalQuantity(productid);
+                        UpdateInStock(productid, totalQuantity);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
@@ -132,11 +150,13 @@ namespace Shoe_Store
         }
         private int CalculateTotalQuantity(int productId)
         {
-                var totalQuantity = dbContext.Providers
-                    .Where(p => p.ProductId == productId)
-                    .Sum(p => p.Quantity);
-
-            return (int)totalQuantity;
+            var totalQuantity = dbContext.Providers
+                .Where(p => p.ProductId == productId)
+                .Sum(p => p.Quantity);
+            var minusQuantity = dbContext.Customers
+                .Where(p => p.ProductId == productId)
+                .Sum(p => p.Quantity);
+            return (int)totalQuantity - (int)minusQuantity;
         }
 
         private void UpdateInStock(int productID, int quantity)
@@ -154,12 +174,80 @@ namespace Shoe_Store
             txtProviderName.Clear();
             txtQuantity.Clear();
             txtProviderDate.Clear();
-            txtProductId.Clear();
+            /*txtProductId.Clear();*/
         }
 
         private void Provider_Load_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (txtProviderID.Text != "")
+            {
+                if (dataGridView.SelectedRows.Count > 0)
+                {
+                    int selectedProviderID = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["providerid"].Value);
+                    var provider = dbContext.Providers.Find(selectedProviderID);
+
+                    string providerName = txtProviderName.Text.Trim();
+                    int quantity;
+                    int productid = int.Parse(cbxProduct.SelectedValue.ToString());
+                    DateTime providerDates; // Declare providerDates here
+
+                    if (!int.TryParse(txtQuantity.Text, out quantity))
+                    {
+                        MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    string providerDate = txtProviderDate.Text.Trim();
+                    if (DateTime.TryParse(providerDate, out providerDates))
+                    {
+                        if (provider != null)
+                        {
+                            if (DateTime.TryParse(providerDate, out providerDates))
+                            {
+                                if (providerDates <= DateTime.Now)
+
+                                {
+                                    // Update the properties of the product with the values from the input fields
+                                    provider.ProviderName = providerName;
+                                    provider.Quantity = quantity;
+                                    provider.ProvideDate = providerDates;
+                                    provider.ProductId = int.Parse(cbxProduct.SelectedValue.ToString());
+
+                                    dbContext.SaveChanges();
+
+                                    MessageBox.Show("Provider updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    ClearInputFields();
+                                    LoadAllProvider();
+
+                                    int totalQuantity = CalculateTotalQuantity(productid);
+                                    UpdateInStock(productid, totalQuantity);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please choose a product id.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
