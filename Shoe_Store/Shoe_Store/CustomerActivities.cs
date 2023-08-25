@@ -180,31 +180,73 @@ namespace Shoe_Store
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            int customerid = Convert.ToInt32(txtCustomerID.Text);
-            string customerName = txtCustomerName.Text;
-            DateTime purchasedate = Convert.ToDateTime(txtPurchaseDate.Text);
-            int quantity = Convert.ToInt32(txtQuantity.Text);
-            int productInfo = int.Parse(cbxProduct.SelectedValue.ToString()); ;
+		{
+			if (txtCustomerID.Text != "")
+			{
+				if (dataGridView.SelectedRows.Count > 0)
+				{
+					int selectedCustomerID = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["customerid"].Value);
+					var customer = dbContext.Customers.Find(selectedCustomerID);
 
-            var customerToUpdate = dbContext.Customers.FirstOrDefault(customer => customer.CustomerId == customerid);
+					string customerName = txtCustomerName.Text.Trim();
+					int quantity;
+					int productid = int.Parse(cbxProduct.SelectedValue.ToString());
+					DateTime purchaseDates; // Declare providerDates here
 
-            if (customerToUpdate != null)
-            {
-                /*customerToUpdate.CustomerId = customerid;*/
-                customerToUpdate.CustomerName = customerName;
-                customerToUpdate.Quantity = (int?)quantity;
-                customerToUpdate.PurchaseDate = purchasedate;
-                customerToUpdate.ProductId = productInfo;
+					if (!int.TryParse(txtQuantity.Text, out quantity))
+					{
+						MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
+					string providerDate = txtPurchaseDate.Text.Trim();
+					if (DateTime.TryParse(providerDate, out purchaseDates))
+					{
+						if (customer != null)
+						{
+							if (DateTime.TryParse(providerDate, out purchaseDates))
+							{
+								if (purchaseDates <= DateTime.Now)
 
-                dbContext.SaveChanges();
-                MessageBox.Show("Update successfully!");
-                LoadAllCustomer();
+								{
+									// Update the properties of the product with the values from the input fields
+									customer.CustomerName = customerName;
+									customer.Quantity = quantity;
+									customer.PurchaseDate = purchaseDates;
+									customer.ProductId = int.Parse(cbxProduct.SelectedValue.ToString());
 
-                int totalQuantity = CalculateTotalQuantity(productInfo);
-                UpdateInStock(productInfo, totalQuantity);
-            }
-        }
+									dbContext.SaveChanges();
+
+									MessageBox.Show("Provider updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+									ClearInputFields();
+									LoadAllCustomer();
+
+									int totalQuantity = CalculateTotalQuantity(productid);
+									UpdateInStock(productid, totalQuantity);
+								}
+								else
+								{
+									MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+								}
+							}
+							else
+							{
+								MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+							}
+						}
+					}
+					else
+					{
+						MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+
+				}
+			}
+			else
+			{
+				MessageBox.Show("Please choose a product id.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+
+		}
 
         private int CalculateTotalQuantity(int productId)
         {
