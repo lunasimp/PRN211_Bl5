@@ -135,43 +135,52 @@ namespace Shoe_Store
                                 }*/
                 
                 if (!int.TryParse(txtQuantity.Text, out quantity))
-                {
-                    MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    {
+                            MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                
                 if (!DateTime.TryParse(txtPurchaseDate.Text, out purchaseDate))
                 {
                     MessageBox.Show("Please enter a valid purchase date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                var newCustomer = new Shoe_Store.Models.Customer
+                if (quantity > 0)
                 {
-                    /*CustomerId = customerId,*/
-                    CustomerName = customerName,
-                    ProductId = productId,
-                    PurchaseDate = purchaseDate,
-                    Quantity = quantity
-                };
+                    int totalQuantity = CalculateTotalQuantity(productId);
+                    if (totalQuantity < 0)
+                    {
+                        MessageBox.Show($"Out of stock, in stock have: {Convert.ToString(totalQuantity + quantity)}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        
+                    }
+                    else
+                    {
+                        var newCustomer = new Shoe_Store.Models.Customer
+                        {
+                            /*CustomerId = customerId,*/
+                            CustomerName = customerName,
+                            ProductId = productId,
+                            PurchaseDate = purchaseDate,
+                            Quantity = quantity
+                        };
 
-                // add
-                
-                int totalQuantity = CalculateTotalQuantity(productId);
-                if (totalQuantity < 0)
-                {
-                    MessageBox.Show($"Out of stock, in stock have: {Convert.ToString(totalQuantity + quantity)}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // add
+
+
+                        UpdateInStock(productId, totalQuantity);
+                        dbContext.Customers.Add(newCustomer);
+                        dbContext.SaveChanges();
+
+                        MessageBox.Show("Customer added successfully!", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        ClearInputFields();
+                        LoadAllCustomer();
+                    }
                 }
                 else
                 {
-                    UpdateInStock(productId, totalQuantity);
-                    dbContext.Customers.Add(newCustomer);
-                    dbContext.SaveChanges();
-
-                    MessageBox.Show("Customer added successfully!", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    ClearInputFields();
-                    LoadAllCustomer();
+                    MessageBox.Show("Please enter Quantity > 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                
             }
             catch (Exception ex)
             {

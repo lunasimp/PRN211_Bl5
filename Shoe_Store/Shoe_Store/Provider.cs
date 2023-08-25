@@ -99,8 +99,49 @@ namespace Shoe_Store
                 }*/
                 if (!int.TryParse(txtQuantity.Text, out quantity))
                 {
-                    MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                        MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                }
+                if (quantity > 0)
+                {
+                    string providerDate = txtProviderDate.Text.Trim();
+
+                    if (DateTime.TryParse(providerDate, out providerDates))
+                    {
+                        if (providerDates <= DateTime.Now)
+
+                        {
+                            var newProvider = new Shoe_Store.Models.Provider
+                            {
+                                /*ProviderId = providerid,*/
+                                ProviderName = providerName,
+                                Quantity = quantity,
+                                ProvideDate = providerDates,
+                                ProductId = productid,
+                            };
+                            // add
+                            dbContext.Providers.Add(newProvider);
+                            dbContext.SaveChanges();
+                            MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ClearInputFields();
+                            LoadAllProvider();
+
+                            int totalQuantity = CalculateTotalQuantity(productid);
+                            UpdateInStock(productid, totalQuantity);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please enter Quantity > 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 /*if (!int.TryParse(txtProductId.Text, out productid))
                 {
@@ -108,40 +149,7 @@ namespace Shoe_Store
                     return;
                 }*/
 
-                string providerDate = txtProviderDate.Text.Trim();
-
-                if (DateTime.TryParse(providerDate, out providerDates))
-                {
-                    if (providerDates <= DateTime.Now)
-
-                    {
-                        var newProvider = new Shoe_Store.Models.Provider
-                        {
-                            /*ProviderId = providerid,*/
-                            ProviderName = providerName,
-                            Quantity = quantity,
-                            ProvideDate = providerDates,
-                            ProductId = productid,
-                        };
-                        // add
-                        dbContext.Providers.Add(newProvider);
-                        dbContext.SaveChanges();
-                        MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ClearInputFields();
-                        LoadAllProvider();
-
-                        int totalQuantity = CalculateTotalQuantity(productid);
-                        UpdateInStock(productid, totalQuantity);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -201,47 +209,59 @@ namespace Shoe_Store
                         MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    string providerDate = txtProviderDate.Text.Trim();
-                    if (DateTime.TryParse(providerDate, out providerDates))
+                    if (quantity > 0)
                     {
-                        if (provider != null)
+                        string providerDate = txtProviderDate.Text.Trim();
+                        if (DateTime.TryParse(providerDate, out providerDates))
                         {
-                            if (DateTime.TryParse(providerDate, out providerDates))
+                            if (provider != null)
                             {
-                                if (providerDates <= DateTime.Now)
-
+                                if (DateTime.TryParse(providerDate, out providerDates))
                                 {
-                                    // Update the properties of the product with the values from the input fields
-                                    provider.ProviderName = providerName;
-                                    provider.Quantity = quantity;
-                                    provider.ProvideDate = providerDates;
-                                    provider.ProductId = int.Parse(cbxProduct.SelectedValue.ToString());
+                                    if (providerDates <= DateTime.Now)
 
-                                    dbContext.SaveChanges();
+                                    {
+                                        // Update the properties of the product with the values from the input fields
+                                        provider.ProviderName = providerName;
+                                        provider.Quantity = quantity;
+                                        provider.ProvideDate = providerDates;
+                                        provider.ProductId = productid;
 
-                                    MessageBox.Show("Provider updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    ClearInputFields();
-                                    LoadAllProvider();
+                                        dbContext.SaveChanges();
 
-                                    int totalQuantity = CalculateTotalQuantity(productid);
-                                    UpdateInStock(productid, totalQuantity);
+                                        MessageBox.Show("Provider updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        ClearInputFields();
+                                        LoadAllProvider();
+
+                                        int totalQuantity = CalculateTotalQuantity(productid);
+                                        UpdateInStock(productid, totalQuantity);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
-                            else
-                            {
-                                MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Please enter Quantity > 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    
 
+                }
+                else
+                {
+                    MessageBox.Show("Please select a product to update.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else

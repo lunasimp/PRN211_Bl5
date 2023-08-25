@@ -23,6 +23,7 @@ namespace Shoe_Store
             LoadAllProducts();
             categoryIds = dbContext.Categories.Select(category => category.CategoryId).ToList();
             txtProductID.Enabled = false;
+            txtInStock.Enabled = false;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -244,6 +245,10 @@ namespace Shoe_Store
                         MessageBox.Show("Product updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadAllProducts();
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a product to update.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
