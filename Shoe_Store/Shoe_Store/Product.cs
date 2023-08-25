@@ -28,13 +28,13 @@ namespace Shoe_Store
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if(IsValid())
+            if (IsValid())
             {
                 string productName = txtProductName.Text.Trim();
                 decimal price = Convert.ToDecimal(txtPrice.Text);
                 /*int inStock = Convert.ToInt32(txtInStock.Text);*/
                 int categoryId = int.Parse(cbxCategoryId.SelectedValue.ToString()); ;
-                
+
                 // Create a new NES_Store.Models.Product entity and populate its properties
                 var newProduct = new Shoe_Store.Models.Product
                 {
@@ -49,18 +49,18 @@ namespace Shoe_Store
 
                 try
                 {
-                // Save the changes to the database
-                dbContext.SaveChanges();
+                    // Save the changes to the database
+                    dbContext.SaveChanges();
 
-                // Show a success message to the user
-                MessageBox.Show("When you add new product, In Stock = 0. Please add In Stock using add new Provider", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Show a success message to the user
+                    MessageBox.Show("When you add new product, In Stock = 0. Please add In Stock using add new Provider", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Clear the input fields after adding the product
-                ClearInputFields();
+                    // Clear the input fields after adding the product
+                    ClearInputFields();
 
-                // Refresh the DataGridView to show the new product
-                LoadAllProducts();
+                    // Refresh the DataGridView to show the new product
+                    LoadAllProducts();
                 }
                 catch (Exception ex)
                 {
@@ -105,9 +105,9 @@ namespace Shoe_Store
                         int selectedProductId = Convert.ToInt32(txtProductID.Text);
 
                         var product = dbContext.Products.Find(selectedProductId);
-                        
-                            if (product != null)
-                            {
+
+                        if (product != null)
+                        {
                             try
                             {
                                 // Remove the product from the database
@@ -133,9 +133,9 @@ namespace Shoe_Store
                                     MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
-                                
-                            }
-                        
+
+                        }
+
                     }
                     else
                     {

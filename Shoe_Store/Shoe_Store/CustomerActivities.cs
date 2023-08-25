@@ -127,18 +127,11 @@ namespace Shoe_Store
                 int productId = int.Parse(cbxProduct.SelectedValue.ToString()); ;
                 int quantity;
                 DateTime purchaseDate;
-                /*
-                                if (!int.TryParse(txtCustomerID.Text, out customerId))
-                                {
-                                    MessageBox.Show("Please enter a valid CustomerID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }*/
-                
                 if (!int.TryParse(txtQuantity.Text, out quantity))
-                    {
-                            MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                
+                {
+                    MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 if (!DateTime.TryParse(txtPurchaseDate.Text, out purchaseDate))
                 {
                     MessageBox.Show("Please enter a valid purchase date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -146,41 +139,39 @@ namespace Shoe_Store
                 }
                 if (quantity > 0)
                 {
-                    int totalQuantity = CalculateTotalQuantity(productId);
+                    /*int totalQuantity = CalculateTotalQuantity(productId);
                     if (totalQuantity < 0)
                     {
                         MessageBox.Show($"Out of stock, in stock have: {Convert.ToString(totalQuantity + quantity)}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         
                     }
                     else
+                    {*/
+                    var newCustomer = new Shoe_Store.Models.Customer
                     {
-                        var newCustomer = new Shoe_Store.Models.Customer
-                        {
-                            /*CustomerId = customerId,*/
-                            CustomerName = customerName,
-                            ProductId = productId,
-                            PurchaseDate = purchaseDate,
-                            Quantity = quantity
-                        };
+                        /*CustomerId = customerId,*/
+                        CustomerName = customerName,
+                        ProductId = productId,
+                        PurchaseDate = purchaseDate,
+                        Quantity = quantity
+                    };
 
-                        // add
+                    dbContext.Customers.Add(newCustomer);
+                    dbContext.SaveChanges();
 
+                    int totalQuantity = CalculateTotalQuantity(productId);
+                    UpdateInStock(productId, totalQuantity);
+                    MessageBox.Show("Customer added successfully!", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        UpdateInStock(productId, totalQuantity);
-                        dbContext.Customers.Add(newCustomer);
-                        dbContext.SaveChanges();
-
-                        MessageBox.Show("Customer added successfully!", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        ClearInputFields();
-                        LoadAllCustomer();
-                    }
+                    ClearInputFields();
+                    LoadAllCustomer();
+                    /*}*/
                 }
                 else
                 {
                     MessageBox.Show("Please enter Quantity > 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -189,73 +180,73 @@ namespace Shoe_Store
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
-		{
-			if (txtCustomerID.Text != "")
-			{
-				if (dataGridView.SelectedRows.Count > 0)
-				{
-					int selectedCustomerID = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["customerid"].Value);
-					var customer = dbContext.Customers.Find(selectedCustomerID);
+        {
+            if (txtCustomerID.Text != "")
+            {
+                if (dataGridView.SelectedRows.Count > 0)
+                {
+                    int selectedCustomerID = Convert.ToInt32(dataGridView.SelectedRows[0].Cells["customerid"].Value);
+                    var customer = dbContext.Customers.Find(selectedCustomerID);
 
-					string customerName = txtCustomerName.Text.Trim();
-					int quantity;
-					int productid = int.Parse(cbxProduct.SelectedValue.ToString());
-					DateTime purchaseDates; // Declare providerDates here
+                    string customerName = txtCustomerName.Text.Trim();
+                    int quantity;
+                    int productid = int.Parse(cbxProduct.SelectedValue.ToString());
+                    DateTime purchaseDates; // Declare providerDates here
 
-					if (!int.TryParse(txtQuantity.Text, out quantity))
-					{
-						MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-					}
-					string providerDate = txtPurchaseDate.Text.Trim();
-					if (DateTime.TryParse(providerDate, out purchaseDates))
-					{
-						if (customer != null)
-						{
-							if (DateTime.TryParse(providerDate, out purchaseDates))
-							{
-								if (purchaseDates <= DateTime.Now)
+                    if (!int.TryParse(txtQuantity.Text, out quantity))
+                    {
+                        MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    string providerDate = txtPurchaseDate.Text.Trim();
+                    if (DateTime.TryParse(providerDate, out purchaseDates))
+                    {
+                        if (customer != null)
+                        {
+                            if (DateTime.TryParse(providerDate, out purchaseDates))
+                            {
+                                if (purchaseDates <= DateTime.Now)
 
-								{
-									// Update the properties of the product with the values from the input fields
-									customer.CustomerName = customerName;
-									customer.Quantity = quantity;
-									customer.PurchaseDate = purchaseDates;
-									customer.ProductId = int.Parse(cbxProduct.SelectedValue.ToString());
+                                {
+                                    // Update the properties of the product with the values from the input fields
+                                    customer.CustomerName = customerName;
+                                    customer.Quantity = quantity;
+                                    customer.PurchaseDate = purchaseDates;
+                                    customer.ProductId = int.Parse(cbxProduct.SelectedValue.ToString());
 
-									dbContext.SaveChanges();
+                                    dbContext.SaveChanges();
 
-									MessageBox.Show("Provider updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
-									ClearInputFields();
-									LoadAllCustomer();
+                                    MessageBox.Show("Provider updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    ClearInputFields();
+                                    LoadAllCustomer();
 
-									int totalQuantity = CalculateTotalQuantity(productid);
-									UpdateInStock(productid, totalQuantity);
-								}
-								else
-								{
-									MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-								}
-							}
-							else
-							{
-								MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-							}
-						}
-					}
-					else
-					{
-						MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
+                                    int totalQuantity = CalculateTotalQuantity(productid);
+                                    UpdateInStock(productid, totalQuantity);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Please input date less than current.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid date format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
-				}
-			}
-			else
-			{
-				MessageBox.Show("Please choose a product id.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			}
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please choose a product id.", "Choose Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
-		}
+        }
 
         private int CalculateTotalQuantity(int productId)
         {
@@ -265,7 +256,7 @@ namespace Shoe_Store
             var totalPurchase = dbContext.Customers
                 .Where(p => p.ProductId == productId)
                 .Sum(p => p.Quantity);
-            
+
             return (int)totalQuantity - (int)totalPurchase;
         }
 

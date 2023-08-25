@@ -19,6 +19,7 @@ namespace Shoe_Store
         {
             InitializeComponent();
             dbContext = new StoreContext();
+            LoadAllProvider();
         }
 
         private void Provider_Load(object sender, EventArgs e)
@@ -99,8 +100,8 @@ namespace Shoe_Store
                 }*/
                 if (!int.TryParse(txtQuantity.Text, out quantity))
                 {
-                        MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                    MessageBox.Show("Please enter a valid Quantity.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
                 if (quantity > 0)
                 {
@@ -149,7 +150,7 @@ namespace Shoe_Store
                     return;
                 }*/
 
-                
+
             }
             catch (Exception ex)
             {
@@ -256,7 +257,7 @@ namespace Shoe_Store
                     {
                         MessageBox.Show("Please enter Quantity > 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    
+
 
                 }
                 else

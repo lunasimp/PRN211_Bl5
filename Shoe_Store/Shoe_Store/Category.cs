@@ -14,7 +14,7 @@ namespace Shoe_Store
 {
     public partial class Category : UserControl
     {
-        private string connectionString = "server =IAMSU; database =Store;uid=sa;pwd=sa@123456;TrustServerCertificate=true;Integrated Security = true"; 
+        private string connectionString = "server =IAMSU; database =Store;uid=sa;pwd=sa@123456;TrustServerCertificate=true;Integrated Security = true";
 
         public Category()
         {
@@ -22,20 +22,20 @@ namespace Shoe_Store
 
         }
 
-       private void Category_Load(object sender, EventArgs e)
+        private void Category_Load(object sender, EventArgs e)
         {
             LoadCategoryData();
             BindDataToControls();
             txtCategoryId.Enabled = false;
         }
-       
+
         private BindingSource categoryBindingSource = new BindingSource();
 
-/*        private void ClearInputFields()
-        {
-            txtCategoryId.Clear();
-            txtProductName.Clear();
-        }*/
+        /*        private void ClearInputFields()
+                {
+                    txtCategoryId.Clear();
+                    txtProductName.Clear();
+                }*/
 
         private void LoadCategoryData()
         {
@@ -71,11 +71,11 @@ namespace Shoe_Store
             txtCategoryId.DataBindings.Add("Text", categoryBindingSource, "CategoryId");
         }
 
-      /*  private void UnbindDataFromControls()
-        {
-            txtProductName.DataBindings.Clear();
-            txtCategoryId.DataBindings.Clear();
-        }*/
+        /*  private void UnbindDataFromControls()
+          {
+              txtProductName.DataBindings.Clear();
+              txtCategoryId.DataBindings.Clear();
+          }*/
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -97,7 +97,7 @@ namespace Shoe_Store
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Thêm dữ liệu thành công!");
-                            btnLoad_Click(sender, e); 
+                            btnLoad_Click(sender, e);
                         }
                         else
                         {
@@ -151,7 +151,7 @@ namespace Shoe_Store
                             if (rowsAffected > 0)
                             {
                                 MessageBox.Show("Xóa dữ liệu thành công!");
-                                btnLoad_Click(sender, e); 
+                                btnLoad_Click(sender, e);
                             }
                             else
                             {
@@ -212,7 +212,7 @@ namespace Shoe_Store
                 MessageBox.Show("Vui lòng chọn một dòng để cập nhật.");
             }
         }
-        
+
 
         private void HandleError(string message, Exception ex)
         {
@@ -236,8 +236,8 @@ namespace Shoe_Store
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
 
-                       
-                        dataGridView.DataSource = dataTable; 
+
+                        dataGridView.DataSource = dataTable;
                     }
                 }
                 catch (Exception ex)
@@ -258,11 +258,11 @@ namespace Shoe_Store
                     {
                         using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(saveFileDialog.FileName))
                         {
-                            
+
                             string header = string.Join(",", dataGridView.Columns.Cast<DataGridViewColumn>().Select(column => column.HeaderText));
                             streamWriter.WriteLine(header);
 
-                            
+
                             foreach (DataGridViewRow row in dataGridView.Rows)
                             {
                                 string rowData = string.Join(",", row.Cells.Cast<DataGridViewCell>().Select(cell => cell.Value));
@@ -303,7 +303,7 @@ namespace Shoe_Store
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
 
-                        dataGridView.DataSource = dataTable; 
+                        dataGridView.DataSource = dataTable;
                     }
                 }
                 catch (Exception ex)
