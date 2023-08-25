@@ -155,16 +155,23 @@ namespace Shoe_Store
                 };
 
                 // add
-
+                
                 int totalQuantity = CalculateTotalQuantity(productId);
-                UpdateInStock(productId, totalQuantity);
-                dbContext.Customers.Add(newCustomer);
-                dbContext.SaveChanges();
+                if (totalQuantity < 0)
+                {
+                    MessageBox.Show($"Out of stock, in stock have: {Convert.ToString(totalQuantity + quantity)}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    UpdateInStock(productId, totalQuantity);
+                    dbContext.Customers.Add(newCustomer);
+                    dbContext.SaveChanges();
 
-                MessageBox.Show("Customer added successfully!", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Customer added successfully!", "Add Customer", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                ClearInputFields();
-                LoadAllCustomer();
+                    ClearInputFields();
+                    LoadAllCustomer();
+                }
             }
             catch (Exception ex)
             {
@@ -207,12 +214,8 @@ namespace Shoe_Store
             var totalPurchase = dbContext.Customers
                 .Where(p => p.ProductId == productId)
                 .Sum(p => p.Quantity);
-            int minus = (int)totalQuantity - (int)totalPurchase;
-            if (minus < 0)
-            {
-                MessageBox.Show($"Out of stock. In Stock have: {Convert.ToString(totalQuantity)}" , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return minus;
+            
+            return (int)totalQuantity - (int)totalPurchase;
         }
 
         private void UpdateInStock(int productID, int quantity)
