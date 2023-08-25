@@ -16,6 +16,9 @@
     <Compile Update="Main.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Manage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Product.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -24,6 +27,9 @@
     </Compile>
     <Compile Update="ResetPassword.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Storage.cs">
+      <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
 </Project>

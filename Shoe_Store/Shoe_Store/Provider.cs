@@ -116,6 +116,9 @@ namespace Shoe_Store
                     MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ClearInputFields();
                     LoadAllProvider();
+
+                    int totalQuantity = CalculateTotalQuantity(productid);
+                    UpdateInStock(productid, totalQuantity);
                 }
                 else
                 {
@@ -127,7 +130,24 @@ namespace Shoe_Store
                 MessageBox.Show($"An error occurred while adding the Provider: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private int CalculateTotalQuantity(int productId)
+        {
+                var totalQuantity = dbContext.Providers
+                    .Where(p => p.ProductId == productId)
+                    .Sum(p => p.Quantity);
 
+            return (int)totalQuantity;
+        }
+
+        private void UpdateInStock(int productID, int quantity)
+        {
+            var product = dbContext.Products.Find(productID);
+            if (product != null)
+            {
+                product.InStock = quantity;
+                dbContext.SaveChanges();
+            }
+        }
         private void ClearInputFields()
         {
             txtProviderID.Clear();

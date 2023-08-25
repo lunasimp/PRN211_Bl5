@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Shoe_Store.Models;
 using System.Data;
 
@@ -29,15 +31,15 @@ namespace Shoe_Store
             {
                 string productName = txtProductName.Text.Trim();
                 decimal price = Convert.ToDecimal(txtPrice.Text);
-                int inStock = Convert.ToInt32(txtInStock.Text);
+                /*int inStock = Convert.ToInt32(txtInStock.Text);*/
                 int categoryId = int.Parse(cbxCategoryId.SelectedValue.ToString()); ;
-
+                
                 // Create a new NES_Store.Models.Product entity and populate its properties
                 var newProduct = new Shoe_Store.Models.Product
                 {
                     ProductName = productName,
                     Price = price,
-                    InStock = inStock,
+                    InStock = 0,
                     CategoryId = categoryId
                 };
 
@@ -50,6 +52,7 @@ namespace Shoe_Store
                 dbContext.SaveChanges();
 
                 // Show a success message to the user
+                MessageBox.Show("When you add new product, In Stock = 0. Please add In Stock using add new Provider", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 MessageBox.Show("Product added successfully!", "Add Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Clear the input fields after adding the product
@@ -82,12 +85,6 @@ namespace Shoe_Store
                 msg += "Price must be greater than 0.\n";
             }
 
-            if (txtInStock.Text.Length == 0)
-            {
-                flag = false;
-                msg += "In Stock must be greater than 0.\n";
-            }
-
             if (flag == false)
             {
                 MessageBox.Show(msg);
@@ -107,19 +104,37 @@ namespace Shoe_Store
                         int selectedProductId = Convert.ToInt32(txtProductID.Text);
 
                         var product = dbContext.Products.Find(selectedProductId);
+                        
+                            if (product != null)
+                            {
+                            try
+                            {
+                                // Remove the product from the database
+                                dbContext.Products.Remove(product);
+                                dbContext.SaveChanges();
 
-                        if (product != null)
-                        {
-                            // Remove the product from the database
-                            dbContext.Products.Remove(product);
-                            dbContext.SaveChanges();
+                                // Clear the change tracking for the deleted product
+                                dbContext.Entry(product).State = EntityState.Detached;
+                                // Show a success message to the user
+                                MessageBox.Show("Product deleted successfully!", "Delete Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                            // Show a success message to the user
-                            MessageBox.Show("Product deleted successfully!", "Delete Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            // Refresh the DataGridView after deleting the product
-                            LoadAllProducts();
-                        }
+                                // Refresh the DataGridView after deleting the product
+                                LoadAllProducts();
+                            }
+                            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+                            {
+                                if (ex.InnerException is SqlException sqlEx && sqlEx.Number == 547) // Check for FOREIGN KEY constraint violation
+                                {
+                                    MessageBox.Show("Unable to delete product because it is referenced by other records.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                                
+                            }
+                        
                     }
                     else
                     {

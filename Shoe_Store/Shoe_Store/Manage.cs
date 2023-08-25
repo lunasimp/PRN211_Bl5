@@ -1,5 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using Project.Models;
+/*using Project.Models;*/
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace Project
 {
     public partial class Manage : UserControl
     {
-        private string connectionString = "server =LAPTOP-KUS4KDEA; database =Store;uid=sa;pwd=123;TrustServerCertificate=true;Integrated Security = true";
+        private string connectionString = "server =IAMSU; database =Store;uid=sa;pwd=sa@123456;TrustServerCertificate=true;Integrated Security = true";
 
         public Manage()
         {

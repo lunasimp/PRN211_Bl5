@@ -192,6 +192,7 @@
             btnAdd.TabIndex = 74;
             btnAdd.Text = "+";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // dataGridView
             // 

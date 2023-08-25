@@ -139,3 +139,5 @@ D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\r
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.pdb
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Shoe_Store.genruntimeconfig.cache
 D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\ref\Shoe_Store.dll
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Project.Manage.resources
+D:\FPT\Semester Last\PRN211_Bl5\Shoe_Store\Shoe_Store\obj\Debug\net6.0-windows\Project.Storage.resources
